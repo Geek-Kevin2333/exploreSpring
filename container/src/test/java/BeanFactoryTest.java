@@ -10,7 +10,7 @@ import support.DefaultListableBeanFactory;
  * @author Kevin
  * @Description
  */
-public class Apitest {
+public class BeanFactoryTest {
 
     /**
      * 测试创建beanDefinition，获得bean对象，以及bean的单例模式
