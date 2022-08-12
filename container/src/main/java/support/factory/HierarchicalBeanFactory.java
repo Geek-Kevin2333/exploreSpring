@@ -1,4 +1,4 @@
-package support;
+package support.factory;
 
 /**
  * Sub-interface implemented by bean factories that can be part

@@ -1,7 +1,6 @@
 package context;
 
-import support.DefaultListableBeanFactory;
-import support.ListableBeanFactory;
+import support.factory.ListableBeanFactory;
 
 public interface ApplicationContext extends ListableBeanFactory {
 

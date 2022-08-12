@@ -1,4 +1,4 @@
-package support;
+package support.factory;
 
 import config.BeanPostProcessor;
 import config.SingletonBeanRegistry;
@@ -10,4 +10,6 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
     String SCOPE_PROTOTYPE = "prototype";
 
     void addBeanPostProcessor(BeanPostProcessor beanPostProcessor);
+
+    void destroySingletons();
 }

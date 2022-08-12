@@ -1,8 +1,11 @@
+import config.DisposableBean;
+import config.InitializingBean;
+
 /**
  * @author Kevin
  * @Description
  */
-public class UserService {
+public class UserService implements InitializingBean, DisposableBean {
     private String uid;
     private UserDao userDao;
     private String location;
@@ -52,5 +55,15 @@ public class UserService {
 
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
+    }
+
+    @Override
+    public void destroy() throws Exception {
+        System.out.println("执行UserService：destroy");
+    }
+
+    @Override
+    public void afterPropertiesSet() {
+        System.out.println("执行UserService.afterPropertiesSet");
     }
 }

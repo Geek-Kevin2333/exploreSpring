@@ -1,6 +1,6 @@
 package config;
 
-import support.ConfigurableListableBeanFactory;
+import support.factory.ConfigurableListableBeanFactory;
 
 public interface BeanFactoryPostProcessor {
     void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory);

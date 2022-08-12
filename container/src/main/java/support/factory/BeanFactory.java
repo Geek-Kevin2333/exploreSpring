@@ -1,4 +1,4 @@
-package support;
+package support.factory;
 
 public interface BeanFactory {
     /**

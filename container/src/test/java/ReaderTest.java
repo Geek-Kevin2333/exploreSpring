@@ -3,7 +3,7 @@ import core.io.DefaultResourceLoader;
 import core.io.Resource;
 import org.junit.Before;
 import org.junit.Test;
-import support.DefaultListableBeanFactory;
+import support.factory.DefaultListableBeanFactory;
 import support.reader.XmlBeanDefinitionReader;
 
 import java.io.IOException;

@@ -2,9 +2,8 @@ import config.BeanDefinition;
 import config.BeanReference;
 import config.PropertyValue;
 import config.PropertyValues;
-import org.junit.Assert;
 import org.junit.Test;
-import support.DefaultListableBeanFactory;
+import support.factory.DefaultListableBeanFactory;
 
 /**
  * @author Kevin

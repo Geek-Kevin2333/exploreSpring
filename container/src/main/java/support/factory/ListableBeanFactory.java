@@ -1,4 +1,6 @@
-package support;
+package support.factory;
+
+import support.factory.BeanFactory;
 
 import java.util.Map;
 

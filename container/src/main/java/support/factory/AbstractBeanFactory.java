@@ -1,8 +1,8 @@
-package support;
+package support.factory;
 
 import config.BeanDefinition;
 import config.BeanPostProcessor;
-import support.BeanFactory;
+import support.DefaultSingletonBeanRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
  * @author Kevin
  * @Description
  */
-public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry implements ConfigurableBeanFactory{
+public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry implements ConfigurableBeanFactory {
 
     /** BeanPostProcessors to apply in createBean */
     private final List<BeanPostProcessor> beanPostProcessors = new ArrayList<BeanPostProcessor>();

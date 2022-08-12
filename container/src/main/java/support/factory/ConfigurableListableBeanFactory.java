@@ -1,4 +1,4 @@
-package support;
+package support.factory;
 
 import config.BeanDefinition;
 import config.BeanPostProcessor;
@@ -13,7 +13,7 @@ import config.BeanPostProcessor;
  * ConfigurableListableBeanFactory最重要的是通过map存储了BeanDefinition。Spring通过以下方法创建ConfigurableListableBeanFactory，解析XML文件，加载BeanDefinition
  * todo 为什么ConfigurableListableBeanFactory需要这么设计，这样继承会不会很复杂，好处在哪。
  **/
-public interface ConfigurableListableBeanFactory extends ListableBeanFactory , AutowireCapableBeanFactory, ConfigurableBeanFactory {
+public interface ConfigurableListableBeanFactory extends ListableBeanFactory, AutowireCapableBeanFactory, ConfigurableBeanFactory {
 
     BeanDefinition getBeanDefinition(String beanName);
 

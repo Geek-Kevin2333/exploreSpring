@@ -1,7 +1,6 @@
-import config.BeanPostProcessor;
 import context.ClassPathXmlApplicationContext;
 import org.junit.Test;
-import support.DefaultListableBeanFactory;
+import support.factory.DefaultListableBeanFactory;
 import support.reader.XmlBeanDefinitionReader;
 
 /**
@@ -25,9 +24,8 @@ public class ProcessorTest {
     @Test
     public void test_xml() {
         ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring.xml");
+        applicationContext.registerShutdownHook();
         UserService userService = applicationContext.getBean("userService", UserService.class);
         userService.queryUserInfo();
-
-
     }
 }
