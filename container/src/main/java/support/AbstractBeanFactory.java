@@ -1,12 +1,20 @@
 package support;
 
 import config.BeanDefinition;
+import config.BeanPostProcessor;
 import support.BeanFactory;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Kevin
  * @Description
  */
-public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry implements BeanFactory{
+public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry implements ConfigurableBeanFactory{
+
+    /** BeanPostProcessors to apply in createBean */
+    private final List<BeanPostProcessor> beanPostProcessors = new ArrayList<BeanPostProcessor>();
 
     protected abstract BeanDefinition getBeanDefinition(String beanName) throws Exception;
 
@@ -17,7 +25,6 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
      * @param args 实例化bean需要的参数
      * @return 重载了一个含有入参信息 args 的 getBean 方法，这样就可以方便的传递入参给构造函数实例化了
      */
-    @Override
     public Object getBean(String name, Object... args) {
         Object bean=getSingleton(name);
         if (bean != null) {
@@ -34,10 +41,9 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
 
     /**
      * 存储了Bean的定义，所以返回的是Class对象
-     *
      * @param name
      */
-    @Override
+
     public Object getBean(String name) {
         Object bean=getSingleton(name);
         if (bean != null) {
@@ -52,9 +58,22 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
         return createBean(name,beanDefinition,null);
     }
 
-    @Override
     public <T> T getBean(String name, Class<T> requiredType) {
         return (T) getBean(name);
     }
+
+    public void addBeanPostProcessor(BeanPostProcessor beanPostProcessor){
+        this.beanPostProcessors.remove(beanPostProcessor);
+        this.beanPostProcessors.add(beanPostProcessor);
+    }
+
+    /**
+     * Return the list of BeanPostProcessors that will get applied
+     * to beans created with this factory.
+     */
+    public List<BeanPostProcessor> getBeanPostProcessors() {
+        return this.beanPostProcessors;
+    }
+
 
 }

@@ -5,6 +5,24 @@
 public class UserService {
     private String uid;
     private UserDao userDao;
+    private String location;
+    private String company;
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
 
     public UserService(){
 
@@ -17,7 +35,7 @@ public class UserService {
     }
 
     public void queryUserInfo(){
-        System.out.println("查询用户信息" + userDao.queryUserName(uid));
+        System.out.println("查询用户信息" + location+company);
     }
 
     public String getUid() {

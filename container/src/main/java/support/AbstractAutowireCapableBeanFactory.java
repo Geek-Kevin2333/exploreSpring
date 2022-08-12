@@ -1,10 +1,7 @@
 package support;
 
 import cn.hutool.core.bean.BeanUtil;
-import config.BeanDefinition;
-import config.BeanReference;
-import config.PropertyValue;
-import config.PropertyValues;
+import config.*;
 
 import java.lang.reflect.Constructor;
 
@@ -12,7 +9,7 @@ import java.lang.reflect.Constructor;
  * @author Kevin
  * @Description
  */
-public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFactory{
+public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFactory implements AutowireCapableBeanFactory{
     private InstantiationStrategy instantiationStrategy =new SimpleInstantiationStrategy();
 
     @Override
@@ -21,6 +18,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         bean = createBeanInstance(beanDefinition, beanName, args);
 
         applyPropertyValues(beanName, bean, beanDefinition);
+        initializeBean(beanName, bean, beanDefinition);
 
         addSingleton(beanName,bean);
         return bean;
@@ -38,8 +36,6 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
             }
         }
         return instantiationStrategy.instantiate(beanDefinition, beanName, constructorToUse, args);
-
-
     }
 
     public void setInstantiationStrategy(InstantiationStrategy instantiationStrategy) {
@@ -59,5 +55,50 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
             //属性填充
             BeanUtil.setFieldValue(bean, name, value);
         }
+    }
+
+    /**
+     * 执行 BeanPostProcessors 接口实现类的 postProcessBeforeInitialization 方法
+     * @param existingBean
+     * @param beanName
+     */
+    @Override
+    public Object applyBeanPostProcessorsBeforeInitialization(Object existingBean, String beanName) {
+        Object result = existingBean;
+        for (BeanPostProcessor processor : getBeanPostProcessors()) {
+            Object current = processor.postProcessBeforeInitialization(result, beanName);
+            if (null == current) {
+                return result;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 执行 BeanPostProcessors 接口实现类的 postProcessorsAfterInitialization 方法
+     *
+     * @param existingBean
+     * @param beanName
+     */
+    @Override
+    public Object applyBeanPostProcessorAfterInitialization(Object existingBean, String beanName) {
+        Object result = existingBean;
+        for (BeanPostProcessor processor : getBeanPostProcessors()) {
+            Object current = processor.postProcessAfterInitialization(result, beanName);
+            if (null == current) return result;
+            result = current;
+        }
+        return result;
+    }
+
+    private Object initializeBean(String beanName, Object bean, BeanDefinition beanDefinition) {
+        Object wrappedBean = applyBeanPostProcessorsBeforeInitialization(bean, beanName);
+        invokeInitMethods(beanName, wrappedBean, beanDefinition);
+        wrappedBean = applyBeanPostProcessorAfterInitialization(bean, beanName);
+        return wrappedBean;
+    }
+
+    private void invokeInitMethods(String beanName, Object wrappedBean, BeanDefinition beanDefinition) {
+
     }
 }
