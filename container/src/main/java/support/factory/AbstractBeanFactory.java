@@ -1,8 +1,10 @@
 package support.factory;
 
+import cn.hutool.core.util.ClassUtil;
 import config.BeanDefinition;
 import config.BeanPostProcessor;
 import support.DefaultSingletonBeanRegistry;
+import util.ClassUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +15,7 @@ import java.util.List;
  */
 public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry implements ConfigurableBeanFactory {
 
+    private ClassLoader beanClassLoader = ClassUtils.getDefaultClassLoader();
     /** BeanPostProcessors to apply in createBean */
     private final List<BeanPostProcessor> beanPostProcessors = new ArrayList<BeanPostProcessor>();
 
@@ -75,5 +78,7 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
         return this.beanPostProcessors;
     }
 
-
+    public ClassLoader getBeanClassLoader() {
+        return beanClassLoader;
+    }
 }

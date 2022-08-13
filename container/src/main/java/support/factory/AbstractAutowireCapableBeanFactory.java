@@ -6,6 +6,10 @@ import config.*;
 import support.DisposableBeanAdapter;
 import support.InstantiationStrategy;
 import support.SimpleInstantiationStrategy;
+import support.aware.Aware;
+import support.aware.BeanClassLoaderAware;
+import support.aware.BeanFactoryAware;
+import support.aware.BeanNameAware;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -104,6 +108,17 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
     }
 
     private Object initializeBean(String beanName, Object bean, BeanDefinition beanDefinition) {
+        if ((bean instanceof Aware)) {
+            if ((bean instanceof BeanFactoryAware)) {
+                ((BeanFactoryAware) bean).setBeanFactory(this);
+            }
+            if ((bean instanceof BeanClassLoaderAware)) {
+                ((BeanClassLoaderAware) bean).setBeanClassLoader(getBeanClassLoader());
+            }
+            if ((bean instanceof BeanNameAware)) {
+                ((BeanNameAware) bean).setBeanName(beanName);
+            }
+        }
         Object wrappedBean = applyBeanPostProcessorsBeforeInitialization(bean, beanName);
         try {
             invokeInitMethods(beanName, wrappedBean, beanDefinition);

@@ -1,11 +1,20 @@
 import config.DisposableBean;
 import config.InitializingBean;
+import context.ApplicationContext;
+import support.aware.ApplicationContextAware;
+import support.aware.BeanClassLoaderAware;
+import support.aware.BeanFactoryAware;
+import support.aware.BeanNameAware;
+import support.factory.BeanFactory;
 
 /**
  * @author Kevin
  * @Description
  */
-public class UserService implements InitializingBean, DisposableBean {
+public class UserService implements BeanNameAware, BeanClassLoaderAware, ApplicationContextAware, BeanFactoryAware {
+    private ApplicationContext applicationContext;
+    private BeanFactory beanFactory;
+
     private String uid;
     private UserDao userDao;
     private String location;
@@ -31,6 +40,13 @@ public class UserService implements InitializingBean, DisposableBean {
 
     }
 
+    public ApplicationContext getApplicationContext() {
+        return applicationContext;
+    }
+
+    public BeanFactory getBeanFactory() {
+        return beanFactory;
+    }
 
     @Override
     public String toString() {
@@ -58,12 +74,22 @@ public class UserService implements InitializingBean, DisposableBean {
     }
 
     @Override
-    public void destroy() throws Exception {
-        System.out.println("执行UserService：destroy");
+    public void setApplicationContext(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
     }
 
     @Override
-    public void afterPropertiesSet() {
-        System.out.println("执行UserService.afterPropertiesSet");
+    public void setBeanClassLoader(ClassLoader classLoader) {
+        System.out.println("Classloader:" + classLoader);
+    }
+
+    @Override
+    public void setBeanFactory(BeanFactory beanFactory) {
+        this.beanFactory = beanFactory;
+    }
+
+    @Override
+    public void setBeanName(String name) {
+        System.out.println("Bean Name is:" + name);
     }
 }

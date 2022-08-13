@@ -3,6 +3,7 @@ package context;
 import config.BeanFactoryPostProcessor;
 import config.BeanPostProcessor;
 import core.io.DefaultResourceLoader;
+import support.aware.ApplicationContextAwareProcessor;
 import support.factory.ConfigurableListableBeanFactory;
 
 import java.util.Map;
@@ -19,11 +20,13 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader i
         refreshBeanFactory();
 //       2.获取beanFactory
         ConfigurableListableBeanFactory beanFactory = getBeanFactory();
-//       3.在bean注册之后，修改beanDefinition
+//       3.添加ApplicationContextAwareProcessor
+        beanFactory.addBeanPostProcessor(new ApplicationContextAwareProcessor(this));
+//       4.在bean注册之后，修改beanDefinition
         invokeBeanFactoryPostProcessors(beanFactory);
-//       4.BeanPostProcessors需要提前于其它Bean对象之前执行注册操作 ，先删后加，有一个顺序问题，所以能达到BeanPostProcessors提前于其它Bean对象之前执行实例化操作的目的
+//       5.BeanPostProcessors需要提前于其它Bean对象之前执行注册操作 ，先删后加，有一个顺序问题，所以能达到BeanPostProcessors提前于其它Bean对象之前执行实例化操作的目的
         registerBeanPostProcessors(beanFactory);
-//       5.提前实例化单例bean对象
+//       6.提前实例化单例bean对象
         beanFactory.preInstantiateSingleton();
     }
 
