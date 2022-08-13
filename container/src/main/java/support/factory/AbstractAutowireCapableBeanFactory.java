@@ -4,8 +4,8 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import config.*;
 import support.DisposableBeanAdapter;
-import support.InstantiationStrategy;
-import support.SimpleInstantiationStrategy;
+import support.instantiationStrategy.InstantiationStrategy;
+import support.instantiationStrategy.SimpleInstantiationStrategy;
 import support.aware.Aware;
 import support.aware.BeanClassLoaderAware;
 import support.aware.BeanFactoryAware;
@@ -30,7 +30,9 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         initializeBean(beanName, bean, beanDefinition);
         //注册实现了DisposableBean接口的bean类
         registerDisposableBeanIfNecessary(beanName,bean,beanDefinition);
-        addSingleton(beanName,bean);
+        if (beanDefinition.isSingleton()) {
+            addSingleton(beanName,bean);
+        }
         return bean;
     }
 
@@ -102,6 +104,9 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
     }
 
     protected void registerDisposableBeanIfNecessary(String beanName, Object bean, BeanDefinition beanDefinition) {
+        if ((!beanDefinition.isSingleton())) {
+            return;
+        }
         if (bean instanceof DisposableBean || StrUtil.isNotEmpty(beanDefinition.getDestroyMethodName())) {
             registerDisposableBean(beanName, new DisposableBeanAdapter(bean, beanName, beanDefinition));
         }

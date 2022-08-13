@@ -1,4 +1,4 @@
-package support;
+package support.instantiationStrategy;
 
 import config.DisposableBean;
 import config.SingletonBeanRegistry;
@@ -13,6 +13,8 @@ import java.util.Set;
  */
 public class DefaultSingletonBeanRegistry implements SingletonBeanRegistry {
     private Map<String,Object> singletonObjects = new HashMap<>();
+
+    protected static final Object NULL_OBJECT = new Object();
 
     private final Map<String, DisposableBean> disposableBeans = new HashMap<>();
 

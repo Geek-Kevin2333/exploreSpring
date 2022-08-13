@@ -1,4 +1,4 @@
-package support;
+package support.instantiationStrategy;
 
 import config.BeanDefinition;
 

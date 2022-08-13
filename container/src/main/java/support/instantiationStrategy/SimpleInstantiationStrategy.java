@@ -1,9 +1,8 @@
-package support;
+package support.instantiationStrategy;
 
 import config.BeanDefinition;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * @author Kevin
