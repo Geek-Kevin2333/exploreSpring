@@ -2,6 +2,7 @@ import config.BeanDefinition;
 import config.BeanReference;
 import config.PropertyValue;
 import config.PropertyValues;
+import context.ClassPathXmlApplicationContext;
 import org.junit.Test;
 import support.factory.DefaultListableBeanFactory;
 
@@ -45,4 +46,12 @@ public class BeanFactoryTest {
 
         bean.queryUserInfo();
     }
+    @Test
+    public void test_factory_bean(){
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring.xml");
+        applicationContext.registerShutdownHook();
+        UserService userService = applicationContext.getBean("userService", UserService.class);
+        userService.queryUserInfo();
+    }
 }
+

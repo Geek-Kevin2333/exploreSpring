@@ -2,15 +2,7 @@
 
 
     <beans>
-        <bean id="userDao" class="UserDao"/>
-        <bean id="userService" class="UserService">
-            <property name="uid" value="10001"/>
-            <property name="company" value="腾讯"/>
-            <property name="location" value="深圳"/>
-            <property name="userDao" ref="userDao"/>
-        </bean>
-        <bean class="MyBeanPostProcessor"/>
-        <bean class="MyBeanFactoryPostProcessor"/>
+        <bean class="CustomerEventListener"></bean>
     </beans>
 
 
