@@ -1,89 +1,29 @@
-import config.DisposableBean;
-import config.InitializingBean;
-import context.ApplicationContext;
-import support.aware.ApplicationContextAware;
-import support.aware.BeanClassLoaderAware;
-import support.aware.BeanFactoryAware;
-import support.aware.BeanNameAware;
-import support.factory.BeanFactory;
+import java.util.Random;
 
 /**
  * @author Kevin
  * @Description
  */
-public class UserService implements BeanNameAware, BeanClassLoaderAware, ApplicationContextAware, BeanFactoryAware {
-    private ApplicationContext applicationContext;
-    private BeanFactory beanFactory;
 
-    private String uid;
-    private String location;
-    private String company;
-    private IUserDao userDao;
+public class UserService implements IUserService {
 
-    public String getLocation() {
-        return location;
+    public String queryUserInfo() {
+        try {
+            Thread.sleep(new Random(1).nextInt(100));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return "小傅哥，100001，深圳";
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public String register(String userName) {
+        try {
+            Thread.sleep(new Random(1).nextInt(100));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return "注册用户：" + userName + " success！";
     }
 
-    public String getCompany() {
-        return company;
-    }
-
-    public void setCompany(String company) {
-        this.company = company;
-    }
-
-    public UserService(){
-
-    }
-
-    public ApplicationContext getApplicationContext() {
-        return applicationContext;
-    }
-
-    public BeanFactory getBeanFactory() {
-        return beanFactory;
-    }
-
-    @Override
-    public String toString() {
-        return super.toString();
-    }
-
-    public void queryUserInfo(){
-        System.out.println("查询用户信息" + userDao.queryUserName(uid) + location + company);
-    }
-
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
-
-
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) {
-        this.applicationContext = applicationContext;
-    }
-
-    @Override
-    public void setBeanClassLoader(ClassLoader classLoader) {
-        System.out.println("Classloader:" + classLoader);
-    }
-
-    @Override
-    public void setBeanFactory(BeanFactory beanFactory) {
-        this.beanFactory = beanFactory;
-    }
-
-    @Override
-    public void setBeanName(String name) {
-        System.out.println("Bean Name is:" + name);
-    }
 }
+
