@@ -2,7 +2,7 @@
 
 
     <beans>
-        <bean class="CustomerEventListener"></bean>
+        <bean class="UserService"></bean>
     </beans>
 
 
